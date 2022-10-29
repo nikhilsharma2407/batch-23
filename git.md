@@ -11,3 +11,5 @@ undo latest commit -  git reset head^
 undo last n commits -  git reset head~n 
 
 git reset <hash>
+  
+commit done after cloning 

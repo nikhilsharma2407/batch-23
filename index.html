@@ -6,13 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Website</title>
+    <!-- embedded or internal css -->
+    <style>
+
+    </style>
+
+    <link rel="stylesheet" href="style.css">
+    <!-- CSS only -->
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"> -->
 </head>
 
 <body>
-    <div>
-        Lorem ipsum dolor sit amet <span style="background-color: green">Highlighted content</span> consectetur
+    <div class="parent">
+        Lorem ipsum dolor sit amet <span class="child">Highlighted content</span> consectetur
         adipisicing elit. Expedita molestiae natus suscipit eveniet? Officiis, architecto exercitationem optio aperiam
-        nostrum esse tempora, maxime et doloremque voluptates sit sed, sint vero perspiciatis.
+        <p>nostrum esse tempora, maxime et <span>Span inside P</span> sit sed, sint vero perspiciatis.</p><span>Sibling of P</span>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati, beatae!
     </div>
     <div>
         para2
@@ -63,7 +73,7 @@
             <input type="checkbox" name="" id="">
             <input type="email" name="" id="">
 
-            <input placeholder="Enter your password">
+            <input style="" class="password" type="password" placeholder="Enter your password">
             <select name="" id="">
                 <option value="" disabled selected>Select an option</option>
                 <option value="">option1</option>

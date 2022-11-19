@@ -1,13 +1,25 @@
 import axios from 'axios';
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react'
 
-export default class Users extends Component {
+function Users() {
+    const [name, setName] = useState("Nikhil");
+    const [id, setid] = useState(1);
 
-    constructor(){
-        super();
-        this.state = {
-            name:"Nikhil"
-        };
+    const updateName = (e) => {
+        // console.dir(e); // e.target-> input element
+        const { value } = e.target // input.value;
+        console.log(value);
+        setName(value);
+    }
+
+    
+    // dependency array
+    
+    useEffect(() => {
+        // run only once
+        // componentDidMount
+        console.log("componentDidMount");
+        document.title = "Users"
         const URL = "https://jsonplaceholder.typicode.com/users";
         // const usersPromise = axios(URL+'123');
 
@@ -28,7 +40,6 @@ export default class Users extends Component {
                 // const userData = await axios.get(URL);
                 console.log("Begin network request");
                 const userData = await axios.get(URL);
-                debugger;
                 console.log(userData.data);    
             } catch (error) {
                 console.log("catch block",error.message);
@@ -37,25 +48,41 @@ export default class Users extends Component {
         }
 
         getData();
-        console.log("here");
-    }
+    }, [])
+    
+    useEffect(() => {
+        // componentDidUpdate
+    console.log("componentDidUpdate");
 
-    updateName(e){
-        console.dir(e); // e.target-> input element
-        const {value} = e.target // input.value;
-        console.log(value);
-        this.setState({name:value})
-    }
+    console.log("useEffect updated name",name);
+    
+      return () => {
+        console.log("componentWillUnmount useEffect return fn");
+      }
+    }, [name]);
 
-    render() {
-        console.log(this.state);
-        const {name} = this.state;
-        return (
-            <>
-                <input type="text" placeholder='Enter name'  onChange={event=>this.updateName(event)}/>
-                <div>Hello {name}</div>
-                <button onClick={()=>alert(`Hello ${name}`)}>Show greeting</button>
-            </>
-        )
-    }
+    useEffect(() => {
+        console.log(id);
+        // IIFE
+        (async()=>{
+            console.log("useEffect updated id",id);
+            const URL = "https://jsonplaceholder.typicode.com/users/";
+            const data = (await axios.get(URL+id)).data;
+            console.log("userData",data);
+        })()
+
+    }, [id])
+
+
+    return (
+        <>
+            <input type="text" placeholder='Enter name' onChange={updateName} />
+            <input type="number" min="1" max="10" placeholder='enter id' onChange={e=>setid(e.target.value)} />
+            {/* <input type="text" placeholder='Enter name'  onChange={e=>setName(e.target.value)}/> */}
+            <div>Hello {name}</div>
+            <button onClick={e=>setid(999)}>Show greeting</button>
+        </>
+    )
 }
+
+export default Users

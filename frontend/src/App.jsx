@@ -2,7 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import Users from './Users/Users';
 import { useState } from 'react';
-
+import Flexbox from './Flexbox/Flexbox';
+import "bootstrap/dist/css/bootstrap.min.css"
 function App() {
   const [showUsers, setUserView] = useState(true);
 

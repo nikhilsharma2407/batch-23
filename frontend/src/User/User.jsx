@@ -15,11 +15,11 @@ function User(props) {
   const { id, title, firstName, lastName, picture } = props.user;
   return (
     <Col lg={4} md={6} sm={10}>
-      <Card>
-        <Card.Body>
+      <Card className='user mb-3'>
+        <Card.Body className='d-flex justify-content-between'>
           <img src={picture} height="100px" />
-          <div className='info'>
-            <div>{title} {firstName} {lastName}</div>
+          <div className='d-flex flex-column justify-content-around'>
+            <div className='mb-3'>{title} {firstName} {lastName}</div>
             <Button variant="primary">Add Friend</Button>
           </div>
         </Card.Body>

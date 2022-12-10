@@ -3,9 +3,11 @@ const app = express();
 const port = 5000;
 const router = require("./routes/router");
 const userRouter = require("./routes/userRouter");
+const dbConnection = require("./dbConnection");
 // const adminRouter = require("./routes/adminRouter");
 
 // enabled for all incoming requests;
+
 app.use(express.json());
 
 // use router only for path "/route"
@@ -13,6 +15,7 @@ app.use('/route',router);
 // app.use('/user',userRouter);
 // app.use('/admin',adminRouter);
 
+app.use('/user',userRouter);
 
 // Middlewares;
 // app.post('/api', (req, res) => {

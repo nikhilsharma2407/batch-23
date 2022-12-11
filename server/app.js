@@ -1,14 +1,20 @@
 const express = require('express');
 const app = express();
 const port = 5000;
+
+const cookieParser = require("cookie-parser");
 const router = require("./routes/router");
 const userRouter = require("./routes/userRouter");
+
+const errorController = require("./controllers/errorController")
+
 const dbConnection = require("./dbConnection");
 // const adminRouter = require("./routes/adminRouter");
 
 // enabled for all incoming requests;
 
 app.use(express.json());
+app.use(cookieParser());
 
 // use router only for path "/route"
 app.use('/route',router);
@@ -16,6 +22,8 @@ app.use('/route',router);
 // app.use('/admin',adminRouter);
 
 app.use('/user',userRouter);
+
+app.use(errorController);
 
 // Middlewares;
 // app.post('/api', (req, res) => {

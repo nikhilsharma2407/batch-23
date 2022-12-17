@@ -21,6 +21,9 @@ const userSchema = new Schema({
   },
   friendList: {
     type: [String],
+  },
+  secret:{
+    type:String
   }
 });
 
@@ -55,6 +58,17 @@ userSchema.statics.updateFriend = async (username, id, addFriend = true) => {
     return true
   }
   errorCreator("Something went wrong!!!");
+};
+
+userSchema.statics.updateUser = async (username,data)=>{
+  const updateData = await UserModel.updateOne({username},{
+    $set:{...data}
+  });
+  if(updateData.modifiedCount){
+    return true
+  }else{
+    errorCreator("Something went wrong!!!");
+  }
 }
 
 const UserModel = mongoose.model('users', userSchema);

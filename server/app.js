@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
-const port = 5000;
+const dotenv = require("dotenv");
+
+dotenv.config();
+const port = process.env.PORT || 5000;
 
 const cookieParser = require("cookie-parser");
 const router = require("./routes/router");
@@ -22,7 +25,6 @@ app.use('/route',router);
 // app.use('/admin',adminRouter);
 
 app.use('/user',userRouter);
-
 app.use(errorController);
 
 // Middlewares;

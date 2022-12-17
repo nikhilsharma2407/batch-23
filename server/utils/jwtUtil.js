@@ -1,7 +1,7 @@
 const {sign,verify} = require("jsonwebtoken");
 const { errorCreator } = require("./responseHandler");
 
-const SECRET_CODE = "MySecretCode";
+const SECRET_CODE = process.env.SECRET_CODE;
 
 const generateToken = (data)=>{
     const token = sign(data,SECRET_CODE,{expiresIn:"1h"});

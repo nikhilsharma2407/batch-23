@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const dotenv = require("dotenv");
+const cors = require("cors");
 
 dotenv.config();
 const port = process.env.PORT || 5000;
@@ -16,15 +17,19 @@ const dbConnection = require("./dbConnection");
 
 // enabled for all incoming requests;
 
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials:true
+}))
 app.use(express.json());
 app.use(cookieParser());
 
 // use router only for path "/route"
-app.use('/route',router);
+app.use('/route', router);
 // app.use('/user',userRouter);
 // app.use('/admin',adminRouter);
 
-app.use('/user',userRouter);
+app.use('/user', userRouter);
 app.use(errorController);
 
 // Middlewares;
@@ -36,7 +41,7 @@ app.use(errorController);
 // })
 
 
-app.listen(port, () => { 
-    console.clear(); 
-    console.log(`server started on port ${port}!`) 
+app.listen(port, () => {
+    console.clear();
+    console.log(`server started on port ${port}!`)
 })

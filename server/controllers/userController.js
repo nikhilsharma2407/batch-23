@@ -130,4 +130,9 @@ const resetPassword = async (req, res, next) => {
 
 }
 
-module.exports = { login: loginWithCredentials, signup, addFriend, removeFriend, loginWithCookie, authMiddleware, generateResetCode, resetPassword };
+const logout = async (req,res,next)=>{
+    res.clearCookie('token');
+    res.send(responseCreator("User logged out successfully!!!"))
+}
+
+module.exports = { login: loginWithCredentials, signup, addFriend, removeFriend, loginWithCookie, authMiddleware, generateResetCode, resetPassword,logout };

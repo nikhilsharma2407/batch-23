@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import User from '../User/User';
 import { Container, Row } from 'react-bootstrap';
 import { useSearchParams } from "react-router-dom";
-function Users() {
+function Users({user}) {
   const [users, setUsers] = useState([]);
   const [searchQuery] = useSearchParams();
   useEffect(() => {

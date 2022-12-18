@@ -1,5 +1,5 @@
 const express = require("express");
-const { signup, login, addFriend, removeFriend, authMiddleware, loginWithCookie, generateResetCode, resetPassword } = require("../controllers/userController");
+const { signup, login, addFriend, removeFriend, authMiddleware, loginWithCookie, generateResetCode, resetPassword, logout } = require("../controllers/userController");
 const router = express.Router();
 
 
@@ -10,6 +10,7 @@ router.patch('/addFriend',authMiddleware,addFriend);
 router.patch('/removeFriend',authMiddleware,removeFriend);
 
 router.get('/login',authMiddleware,loginWithCookie);
+router.get('/logout',logout);
 // router.patch('/generateQR',generateResetCode);
 router.patch('/resetPassword',resetPassword);
 

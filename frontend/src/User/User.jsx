@@ -13,6 +13,8 @@ function User(props) {
   //     "picture": "https://randomuser.me/api/portraits/women/58.jpg"
   // }
   const { id, title, firstName, lastName, picture } = props.user;
+
+  
   return (
     <Col lg={4} md={6} sm={10}>
       <Card className='user mb-3'>

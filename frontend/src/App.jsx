@@ -11,7 +11,7 @@ import MyNavBar from './MyNavbar';
 import Signup from './Signup/Signup';
 import Login from './Login/Login';
 import { loginWithCookieUtil } from './apiUtil';
-
+import Counter from "./Counter/Counter";
 function App() {
   const [showUsers, setUserView] = useState(true);
   const [loginData, setLoginData] = useState(null)
@@ -49,6 +49,7 @@ function App() {
             </div>
           } />
           <Route path='/FLEX' element={<Flexbox />} />
+          <Route path='/count' element={<Counter/>} />
           <Route path='/route/:id' element={<Routing />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login handleLoginData = {setLoginData} />} />

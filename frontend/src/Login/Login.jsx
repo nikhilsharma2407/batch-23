@@ -1,9 +1,12 @@
 import { Button, Form, Container, Row, Col, Card } from 'react-bootstrap';
 import React, { useEffect, useRef, useState } from 'react'
 import { loginUtil } from '../apiUtil';
+import {useSelector,useDispatch } from "react-redux"
+import { loginActionCreator } from '../reducers/userReducer';
 
 function Login({handleLoginData}) {
-  console.log("render");
+  const state = useSelector(state=>state.user);
+  const dispath = useDispatch()
 
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
@@ -11,10 +14,7 @@ function Login({handleLoginData}) {
   const login = async()=>{
     const payload = {username,password}
     try {
-      const data = (await loginUtil(payload))?.data
-      if(data){
-        handleLoginData(data);
-      }
+      dispath(loginActionCreator(payload));
     } catch (error) {
       console.log(error);
     }

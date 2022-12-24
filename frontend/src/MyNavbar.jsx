@@ -23,6 +23,7 @@ function MyNavBar({ user }) {
             <Nav.Link as={Link} to="/">Home</Nav.Link>
             <Nav.Link as={Link} to="/flex">Flex</Nav.Link>
             <Nav.Link as={Link} to="/route/123">Route</Nav.Link>
+            <Nav.Link as={Link} to="/count">Counter</Nav.Link>
 
           </Nav>
           <Nav className='ms-auto'>

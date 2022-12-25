@@ -6,7 +6,7 @@ import { loginActionCreator } from '../reducers/userReducer';
 
 function Login({handleLoginData}) {
   const state = useSelector(state=>state.user);
-  const dispath = useDispatch()
+  const dispatch = useDispatch()
 
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
@@ -14,7 +14,7 @@ function Login({handleLoginData}) {
   const login = async()=>{
     const payload = {username,password}
     try {
-      dispath(loginActionCreator(payload));
+      dispatch(loginActionCreator(payload));
     } catch (error) {
       console.log(error);
     }

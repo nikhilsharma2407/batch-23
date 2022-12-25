@@ -69,7 +69,7 @@ const addFriend = async (req, res, next) => {
         const data = await UserModel.updateFriend(username, id);
         if (data) {
             res.status(200);
-            res.send(responseCreator(`You're now friends with ${name}`))
+            res.send(responseCreator(`You're now friends with ${name}`,data.friendList))
         }
     } catch (error) {
         next(error);
@@ -83,7 +83,7 @@ const removeFriend = async (req, res, next) => {
         const data = await UserModel.updateFriend(username, id, false);
         if (data) {
             res.status(200);
-            res.send(responseCreator(`You're no longer friends with ${name}`))
+            res.send(responseCreator(`You're no longer friends with ${name}`,data.friendList))
         }
     } catch (error) {
         next(error);

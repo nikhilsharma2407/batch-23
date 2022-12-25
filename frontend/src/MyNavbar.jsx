@@ -4,10 +4,14 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useSearchParams } from "react-router-dom"
 import { logoutUtil } from './apiUtil';
+import { logoutAction } from './reducers/userReducer';
 
-function MyNavBar({ user }) {
+function MyNavBar() {
+  const {username} = useSelector(state=>state.user);
+  const dispatch = useDispatch();
   const [, setURLSearchParams] = useSearchParams();
 
   return (
@@ -27,7 +31,7 @@ function MyNavBar({ user }) {
 
           </Nav>
           <Nav className='ms-auto'>
-            {user ? <Nav.Link as={Button} onClick={e => logoutUtil()}>Logout</Nav.Link> : <>
+            {username ? <Nav.Link variant="secondary-outline" as={Button} onClick={e => dispatch(logoutAction())}>Logout</Nav.Link> : <>
               <Nav.Link as={Link} to="/login">Login</Nav.Link>
               <Nav.Link as={Link} to="/signup">Signup</Nav.Link>
             </>}

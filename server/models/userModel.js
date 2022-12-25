@@ -55,7 +55,7 @@ userSchema.statics.updateFriend = async (username, id, addFriend = true) => {
   }
   console.log(data);
   if (data.modifiedCount || data.matchedCount) {
-    return true
+    return UserModel.getUser(username);
   }
   errorCreator("Something went wrong!!!");
 };

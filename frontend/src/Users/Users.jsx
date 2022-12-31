@@ -4,6 +4,7 @@ import User from '../User/User';
 import { Container, Row } from 'react-bootstrap';
 import { useSearchParams } from "react-router-dom";
 import {useSelector,useDispatch} from "react-redux"
+import { loadingAction } from '../reducers/userReducer';
 
 
 function Users({user}) {
@@ -16,7 +17,9 @@ function Users({user}) {
   useEffect(() => {
     const URL = "https://dummyapi.io/data/v1/user?limit=10";
     (async () => {
+      dispatch(loadingAction(true));
       const { data } = (await axios.get(URL, { headers: { "app-id": "623f19872934031e5b0d8089" } })).data;
+      dispatch(loadingAction(false));
       console.log(data);
       setUsers(data)
     })()

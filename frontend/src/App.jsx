@@ -1,53 +1,56 @@
 import logo from './logo.svg';
 import './App.css';
-import Users from './Users/Users';
-import { useEffect, useState } from 'react';
-import Flexbox from './Flexbox/Flexbox';
+import { lazy, Suspense, useEffect, useState } from 'react';
+import { Spinner } from "react-bootstrap"
 import "bootstrap/dist/css/bootstrap.min.css"
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Routing from './Routing/Routing';
 import MyNavBar from './MyNavbar';
-import Signup from './Signup/Signup';
-import Login from './Login/Login';
-import { loginWithCookieUtil } from './apiUtil';
-import Counter from "./Counter/Counter";
-import Toast from './Toast';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginWithCookieAction } from './reducers/userReducer';
+
+const Signup = lazy(() => import('./Signup/Signup'));
+const Login = lazy(() => import('./Login/Login'));
+const Counter = lazy(() => import("./Counter/Counter"));
+const Toast = lazy(() => import('./Toast'));
+const Flexbox = lazy(() => import('./Flexbox/Flexbox'));
+const Users = lazy(() => import('./Users/Users'));
+const Routing = lazy(() => import('./Routing/Routing'));
+
 function App() {
   const [showUsers, setUserView] = useState(true);
   const [loginData, setLoginData] = useState(null)
-
+  const { loading } = useSelector(state => state.user);
   const dispatch = useDispatch();
   // have state for showUsers 
   const name = "Nikhil";
   useEffect(() => {
-      dispatch(loginWithCookieAction());
+    dispatch(loginWithCookieAction());
   }, [])
 
 
   return (
     <>
       <BrowserRouter>
-        <Toast/>
+        {loading ? <Spinner animation="border" className='spinner' role="status"/>: null}
+        <Toast />
         <MyNavBar user={loginData} />
-        <Routes>
-          <Route path='/' element={
-            <div className="App">
-              <div>
-                <button onClick={e => setUserView(!showUsers)}>{showUsers ? 'Hide component' : 'Show Component'} </button>
+        <Suspense fallback={<Spinner animation="border" className='spinner' role="status"/>}>
+          <Routes>
+            <Route path='/' element={
+              <div className="App">
+                <div>
+                  <button onClick={e => setUserView(!showUsers)}>{showUsers ? 'Hide component' : 'Show Component'} </button>
+                </div>
+                {showUsers ? <Users user={loginData} /> : null}
               </div>
-              {showUsers ? <Users user={loginData} /> : null}
-            </div>
-          } />
-          <Route path='/FLEX' element={<Flexbox />} />
-          <Route path='/count' element={<Counter />} />
-          <Route path='/route/:id' element={<Routing />} />
-          <Route path='/signup' element={<Signup />} />
-          <Route path='/login' element={<Login handleLoginData={setLoginData} />} />
-        </Routes>
-
+            } />
+            <Route path='/FLEX' element={<Flexbox />} />
+            <Route path='/count' element={<Counter />} />
+            <Route path='/route/:id' element={<Routing />} />
+            <Route path='/signup' element={<Signup />} />
+            <Route path='/login' element={<Login handleLoginData={setLoginData} />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </>
   );

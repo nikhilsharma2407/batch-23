@@ -1,10 +1,11 @@
-import { addFriendUtil, loginUtil, loginWithCookieUtil, logoutUtil } from "../apiUtil";
+import { addFriendUtil, loginUtil, loginWithCookieUtil, logoutUtil, removeFriendUtil } from "../apiUtil";
 
 const initialState = {
     message: "",
     success: false,
     name: "",
     username: "",
+    loading: false,
     friendList: []
 }
 
@@ -13,7 +14,8 @@ const ACTIONS = {
     ERROR: "ERROR",
     LOGOUT: "LOGOUT",
     ADD_FRIEND: "ADD_FRIEND",
-    REMOVE_FRIEND: "REMOVE_FRIEND"
+    REMOVE_FRIEND: "REMOVE_FRIEND",
+    LOADING: "LOADING"
 };
 
 export const errorActionCreator = payload => ({ type: ACTIONS.ERROR, payload });
@@ -21,11 +23,14 @@ export const errorActionCreator = payload => ({ type: ACTIONS.ERROR, payload });
 const asyncActionCreator = (apiUtil, type, apiPayload) => {
     return async (dispatch) => {
         try {
+            dispatch(loadingAction(true));
             const data = (await apiUtil(apiPayload))?.data;
             dispatch({ type, payload: data });
         } catch (error) {
             const payload = error.response.data;
             dispatch(errorActionCreator(payload));
+        } finally{
+            dispatch(loadingAction(false));
         }
     }
 }
@@ -43,12 +48,16 @@ export const addFriendAction = (payload) => {
 };
 
 export const removeFriendAction = (payload) => {
+    return asyncActionCreator(removeFriendUtil, ACTIONS.REMOVE_FRIEND, payload);
 
 }
 export const logoutAction = (payload) => {
     return asyncActionCreator(logoutUtil, ACTIONS.LOGOUT)
 }
 
+export const loadingAction = payload => {
+    return {type:ACTIONS.LOADING, payload};
+}
 
 export const userReducer = (state = initialState, action) => {
     const { success, data, message } = action?.payload || {};
@@ -59,8 +68,11 @@ export const userReducer = (state = initialState, action) => {
         case ACTIONS.ERROR:
             return { ...state, message, success };
         case ACTIONS.ADD_FRIEND:
+        case ACTIONS.REMOVE_FRIEND:
             return { ...state, message, success, friendList: data };
-
+        case ACTIONS.LOADING:
+            const {payload} = action;
+            return {...state,loading:payload}
         case ACTIONS.LOGOUT:
             return { ...initialState, message, success }
         default:

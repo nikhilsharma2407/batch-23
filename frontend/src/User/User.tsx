@@ -4,13 +4,26 @@ import "./User.css"
 import Card from 'react-bootstrap/Card';
 import { Button, Col } from 'react-bootstrap';
 import { addFriendAction, removeFriendAction } from '../reducers/userReducer';
+import { useSelector } from 'react-redux';
+import IUser from "./IUser";
+import {useNavigate, useLocation} from "react-router"
 
-function User(props) {
-  // const { id, title, firstName, lastName, picture } = props.user;
+function User(props:{dispatch:any,isFriend:boolean,user:IUser}) {
+  // const { id, title, firstname, lastName, picture } = props.user;
   // const { username,dispatch, isFriend } = props;
+  const {username} = useSelector((state:any)=>state.user);
+  
+  const navigate = useNavigate();
+  const {pathname} = useLocation();
+
   const {dispatch, isFriend, user: { id, title, firstName, lastName, picture } } = props;
 
+
   const addFriend = () => {
+    if(!username){
+      alert("Please login to continue!!!")
+      navigate("/login",{state:pathname});
+    }
     const payload = {id,name:firstName};
     dispatch(addFriendAction(payload));
   };

@@ -15,14 +15,18 @@ const ACTIONS = {
     LOGOUT: "LOGOUT",
     ADD_FRIEND: "ADD_FRIEND",
     REMOVE_FRIEND: "REMOVE_FRIEND",
-    LOADING: "LOADING"
+    LOADING: "LOADING",
+    RESET_MSG: "RESET_MSG",
 };
 
 export const errorActionCreator = payload => ({ type: ACTIONS.ERROR, payload });
 
+const resetMessageAction = ()=>({type:ACTIONS.RESET_MSG})
+
 const asyncActionCreator = (apiUtil, type, apiPayload) => {
     return async (dispatch) => {
         try {
+            dispatch(resetMessageAction());
             dispatch(loadingAction(true));
             const data = (await apiUtil(apiPayload))?.data;
             dispatch({ type, payload: data });
@@ -59,6 +63,8 @@ export const loadingAction = payload => {
     return {type:ACTIONS.LOADING, payload};
 }
 
+
+
 export const userReducer = (state = initialState, action) => {
     const { success, data, message } = action?.payload || {};
     switch (action.type) {
@@ -74,7 +80,9 @@ export const userReducer = (state = initialState, action) => {
             const {payload} = action;
             return {...state,loading:payload}
         case ACTIONS.LOGOUT:
-            return { ...initialState, message, success }
+            return { ...initialState, message, success };
+        case ACTIONS.RESET_MSG:
+            return {...state,message:""};
         default:
             return state;
     }

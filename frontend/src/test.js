@@ -1,9 +1,12 @@
-const state = { count: 0 }
+const user = {
+    "id": "60d0fe4f5311236168a109ca",
+    "title": "ms",
+    "firstName": "Sara",
+    "lastName": "Andersen",
+    "picture": "https://randomuser.me/api/portraits/women/58.jpg"
+}
 
+user.id = "123"
+user.randomValue = "abc";
 
-state.count+=5
-state.count--;
-
-console.log(state.count);
-
-const updatedState = {...state,count:state.count+5};
+console.log(user);

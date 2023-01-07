@@ -13,7 +13,7 @@ const Login = lazy(() => import('./Login/Login'));
 const Counter = lazy(() => import("./Counter/Counter"));
 const Toast = lazy(() => import('./Toast'));
 const Flexbox = lazy(() => import('./Flexbox/Flexbox'));
-const Users = lazy(() => import('./Users/Users'));
+const Users = lazy(() => import('./Users/Users.tsx'));
 const Routing = lazy(() => import('./Routing/Routing'));
 
 function App() {

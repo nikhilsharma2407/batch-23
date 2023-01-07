@@ -1,17 +1,19 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import User from '../User/User';
+import User from '../User/User.tsx';
 import { Container, Row } from 'react-bootstrap';
 import { useSearchParams } from "react-router-dom";
 import {useSelector,useDispatch} from "react-redux"
 import { loadingAction } from '../reducers/userReducer';
+import IUser from '../User/IUser';
+
 
 
 function Users({user}) {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<IUser[]>([]);
   const [searchQuery] = useSearchParams();
 
-  const {friendList} = useSelector(state=>state.user);
+  const {friendList} = useSelector((state:any)=>state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,7 +38,6 @@ function Users({user}) {
           map(user => {
             const isFriend = friendList.includes(user?.id);
             return <User key={user.id} user={user} isFriend = {isFriend} dispatch = {dispatch} />
-          
           })}
       </Row>
     </Container>

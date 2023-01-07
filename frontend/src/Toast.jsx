@@ -7,9 +7,10 @@ function Toast() {
     const { message, success } = useSelector(state => state.user);
 
     useEffect(() => {
+        if(!message) return;
         if (success) {
             toast.success(message);
-        } else if (success===false && message) {
+        } else if (success===false) {
             toast.error(message);
         }
     }, [message,success])

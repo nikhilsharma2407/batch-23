@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const dotenv = require("dotenv");
 const cors = require("cors");
+const path = require("path")
 
 dotenv.config();
 const port = process.env.PORT || 5000;
@@ -24,12 +25,17 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
+app.use("/",express.static("./build/"));
 // use router only for path "/route"
 app.use('/route', router);
 // app.use('/user',userRouter);
 // app.use('/admin',adminRouter);
 
 app.use('/user', userRouter);
+
+app.get("*",(req,res)=>{
+    res.sendFile(path.join(__dirname,"./build/index.html"));
+});
 app.use(errorController);
 
 // Middlewares;
